@@ -1,53 +1,50 @@
 import React from 'react';
 
-class Bomb extends React.Component {
+export default class RouletteGun extends React.Component {
+    static defaultProps = {
+        bulletInChamber: 8,
+    }
+
     state = {
-        count: 0,
-    }
-
-    componentDidMount() {
-       this.interval = setInterval(() => {
-        this.setState({count: this.state.count + 1})
-       },1000) 
-    }
-    componentWillUnmount(){
-        clearInterval(this.interval)
+        chamber: null,
+        spinningTheChamber: false,
     }
 
 
-    renderDisplay() {
-        const { count } = this.state
-        if (count >= 8) {
-          clearInterval(this.interval)
-          return 'BOOM!!!!'
-        } else if (count % 2 === 0) {
-          return 'tick'
+    componentWillUnmount() {
+        clearTimeout(this.timeout)
+    }
+
+        handleButtonClick = () => {
+            this.setState ({spinningTheChamber: true})
+            this.timeout = setTimeout(() =>{
+                const randomCount = Math.ceil(Math.random() * 8)
+
+            this.setState({
+                chamber: randomCount,
+                spinningTheChamber: false,
+            })
+        }, 2000)
+    }
+
+    renderDisplay () {
+        const { chamber, spinningTheChamber } = this.state
+        const {bulletInChamber} = this.props
+        if (spinningTheChamber) {
+            return 'spinning the chamber and pulling the trigger! ...'
+        } else if (chamber === bulletInChamber) {
+            return 'BANG!!!!!'
         } else {
-          return 'tock'
+            return 'you\'re safe!'
         }
-      }
+    }
 
     render(){
         return (
-            <div className="Bomb">
-                <p>
-                {this.renderDisplay()}
-                </p>
+            <div className='RouletteGun'>
+                <p>{this.renderDisplay()}</p>
+                <button onClick={this.handleButtonClick}>Pull the trigger!</button>
             </div>
         )
     }
-
-  
-  
-  
-  
-  
-  
-  
-  
-    
 }
-
-
-
-export default Bomb;

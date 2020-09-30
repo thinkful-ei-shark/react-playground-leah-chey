@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import Bomb from './state-drills'
+import RouletteGun from './state-drills'
 
 ReactDOM.render(
   <React.StrictMode>
-    <Bomb />
+    <RouletteGun />
   </React.StrictMode>,
   document.getElementById('root')
 );
