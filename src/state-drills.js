@@ -1,21 +1,53 @@
 import React from 'react';
 
-class HelloWorld extends React.Component {
+class Bomb extends React.Component {
     state = {
-        who: 'world',
+        count: 0,
     }
 
-  render() {
-    return ( 
-        <div className='HelloWorld'>
-        <p>Hello, {this.state.who}</p>
-        <button onClick={() => this.setState({ who: 'world' })} >world</button>
-        <button onClick={() => this.setState({ who: 'friend' })} >friend</button>
-        <button onClick={() => this.setState({ who: 'react' })} >react</button>
-        </div>
-    )
+    componentDidMount() {
+       this.interval = setInterval(() => {
+        this.setState({count: this.state.count + 1})
+       },1000) 
     }
+    componentWillUnmount(){
+        clearInterval(this.interval)
+    }
+
+
+    renderDisplay() {
+        const { count } = this.state
+        if (count >= 8) {
+          clearInterval(this.interval)
+          return 'BOOM!!!!'
+        } else if (count % 2 === 0) {
+          return 'tick'
+        } else {
+          return 'tock'
+        }
+      }
+
+    render(){
+        return (
+            <div className="Bomb">
+                <p>
+                {this.renderDisplay()}
+                </p>
+            </div>
+        )
+    }
+
+  
+  
+  
+  
+  
+  
+  
+  
+    
 }
 
 
-export default HelloWorld;
+
+export default Bomb;

@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import HelloWorld from './state-drills'
+import Bomb from './state-drills'
 
 ReactDOM.render(
   <React.StrictMode>
-    <HelloWorld />
+    <Bomb />
   </React.StrictMode>,
   document.getElementById('root')
 );
