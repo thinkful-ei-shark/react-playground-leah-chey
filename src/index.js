@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import RouletteGun from './state-drills'
+import Accordian from './state-drills'
 
 ReactDOM.render(
   <React.StrictMode>
-    <RouletteGun />
+    <Accordian />
   </React.StrictMode>,
   document.getElementById('root')
 );

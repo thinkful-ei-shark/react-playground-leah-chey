@@ -1,50 +1,53 @@
-import React from 'react';
-
-export default class RouletteGun extends React.Component {
-    static defaultProps = {
-        bulletInChamber: 8,
-    }
-
-    state = {
-        chamber: null,
-        spinningTheChamber: false,
-    }
+import React, { Component } from 'react'
 
 
-    componentWillUnmount() {
-        clearTimeout(this.timeout)
-    }
+export default class Accordion extends Component {
+  static defaultProps = {
+    sections: [{
+      title: 'Section 1',
+      content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+    },
+    {
+      title: 'Section 2',
+      content: 'Cupiditate tenetur aliquam necessitatibus id distinctio quas nihil ipsam nisi modi!',
+    },
+    {
+      title: 'Section 3',
+      content: 'Animi amet cumque sint cupiditate officia ab voluptatibus libero optio et?',
+    },]
+  };
 
-        handleButtonClick = () => {
-            this.setState ({spinningTheChamber: true})
-            this.timeout = setTimeout(() =>{
-                const randomCount = Math.ceil(Math.random() * 8)
+  state = {
+    activeSectionIndex: null,
+  }
 
-            this.setState({
-                chamber: randomCount,
-                spinningTheChamber: false,
-            })
-        }, 2000)
-    }
+  handleSetActiveSecion = (sectionIndex) => {
+    this.setState({ activeSectionIndex: sectionIndex })
+  }
 
-    renderDisplay () {
-        const { chamber, spinningTheChamber } = this.state
-        const {bulletInChamber} = this.props
-        if (spinningTheChamber) {
-            return 'spinning the chamber and pulling the trigger! ...'
-        } else if (chamber === bulletInChamber) {
-            return 'BANG!!!!!'
-        } else {
-            return 'you\'re safe!'
-        }
-    }
+  renderItem(section, idx, activeSectionIndex) {
+    return (
+      <li className='Accordion__item' key={idx}>
+        <button
+          type='button'
+          onClick={() => this.handleSetActiveSecion(idx)}
+        >
+          {section.title}
+        </button>
+        {(activeSectionIndex === idx) && <p>{section.content}</p>}
+      </li>
+    )
+  }
 
-    render(){
-        return (
-            <div className='RouletteGun'>
-                <p>{this.renderDisplay()}</p>
-                <button onClick={this.handleButtonClick}>Pull the trigger!</button>
-            </div>
-        )
-    }
+  render() {
+    const { activeSectionIndex } = this.state
+    const { sections } = this.props
+    return (
+      <ul className='Accordion'>
+        {sections.map((section, idx) =>
+          this.renderItem(section, idx, activeSectionIndex)
+        )}
+      </ul>
+    )
+  }
 }
